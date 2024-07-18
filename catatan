@@ -1,0 +1,24 @@
+// Ambil agenda_id yang baru saja disimpan
+    $agendaId = $submissionModule->id;
+
+    // Simpan partisipan rapat ke MeetingParticipant jika ada
+    if ($request->has('role_id')) {
+        foreach ($request->role_id as $roleId) {
+            $users = User::where('id_role', $roleId)->get(); // Ambil semua user dengan role_id tertentu
+            foreach ($users as $user) {
+                $per_role = MeetingParticipant::create([
+                    'agenda_id' => $agendaId,
+                    'participant_id' => $user->id,
+                ]);
+            }
+        }
+    }
+
+    if ($request->has('user_id')) {
+        foreach ($request->user_id as $userId) {
+            $per_individu = MeetingParticipant::create([
+                'agenda_id' => $agendaId,
+                'participant_id' => $userId,
+            ]);
+        }
+    }
