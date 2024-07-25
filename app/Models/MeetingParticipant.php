@@ -14,7 +14,8 @@ class MeetingParticipant extends Model
         'agenda_id',
         'participant_id',
         'initial_absen_at',
-        'final_absen_at'
+        'final_absen_at',
+        'not_attending_reason'
     ];
 
     /**

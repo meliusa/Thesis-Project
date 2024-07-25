@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Mely\Mely;
 
-use App\Models\DocumentationMinute;
-use App\Http\Requests\StoreDocumentationMinuteRequest;
-use App\Http\Requests\UpdateDocumentationMinuteRequest;
 use App\Http\Controllers\Controller;
 use App\Mail\docMinuteEmail;
+use App\Mail\docMinuteStatusChangedEmail;
 use App\Models\DocMinute;
 use App\Models\DocMinuteQnaDetails;
 use App\Models\MeetingParticipant;
@@ -14,7 +12,6 @@ use App\Models\SubmissionModule;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use PhpParser\Comment\Doc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -55,14 +52,19 @@ class DocMinuteController extends Controller
     public function store(Request $request)
     {
         // Validasi data yang diterima dari form
-        $request->validate([
-            'agenda_id' => 'required',
-            'events' => 'required',
-            'decisions' => 'required',
-            'asker.*' => 'required',
-            'question.*' => 'required',
-            'answer.*' => 'required',
-        ]);
+        // $request->validate([
+        //     'agenda_id' => 'required',
+        //     'events' => 'required',
+        //     'decisions' => 'required',
+        //     'asker.*' => 'required',
+        //     'question.*' => 'required',
+        //     'answer.*' => 'required',
+        // ]);
+
+        if($request->agenda_id == ""){
+            toast('Agenda Rapat Belum Diisikan.', 'error');
+            return redirect()->back()->withInput();
+        }
 
         // Simpan data ke dalam tabel 'doc_minutes'
         $docMinute = new DocMinute();
@@ -71,6 +73,7 @@ class DocMinuteController extends Controller
         $docMinute->events = $request->events;
         $docMinute->decisions = $request->decisions;
         $docMinute->status = 'Baru Ditambahkan'; // Atur status sesuai kebutuhan
+        $docMinute->created_at = now();
         $docMinute->save();
 
         // Simpan data Q&A ke dalam tabel 'doc_minute_qna_details'
@@ -81,6 +84,7 @@ class DocMinuteController extends Controller
             $qnaDetail->asker = $request->asker[$i];
             $qnaDetail->question = $request->question[$i];
             $qnaDetail->answer = $request->answer[$i];
+            $qnaDetail->created_at = now();
             $qnaDetail->save();
         }
 
@@ -129,6 +133,7 @@ class DocMinuteController extends Controller
         $docMinute->events = $request->events;
         $docMinute->decisions = $request->decisions;
         $docMinute->status = 'Baru Ditambahkan'; // Atur status sesuai kebutuhan
+        $docMinute->updated_at = now();
         $docMinute->save();
         
         // Hapus semua detail polling yang terkait dengan polling ini
@@ -142,6 +147,7 @@ class DocMinuteController extends Controller
             $qnaDetail->asker = $request->asker[$i];
             $qnaDetail->question = $request->question[$i];
             $qnaDetail->answer = $request->answer[$i];
+            $qnaDetail->updated_at = now();
             $qnaDetail->save();
     }
 
@@ -188,7 +194,10 @@ class DocMinuteController extends Controller
     {
         $docMinute = DocMinute::findOrFail($id);
         $docMinute->status = 'Telah Didistribusikan'; // Atur status sesuai kebutuhan
+        $docMinute->updated_at = now();
         $docMinute->save();
+        
+        Mail::to($docMinute->user->email)->send(new docMinuteStatusChangedEmail());
 
         $docMinuteQnaDetails = DocMinuteQnaDetails::where('doc_minute_id', $id)->get();
         $submissionModule = SubmissionModule::where('id', $docMinute->agenda_id)->first();
@@ -205,9 +214,10 @@ class DocMinuteController extends Controller
 
         $submissionModule->status = 'Notula Tersedia';
         $submissionModule->provided_at = Carbon::now();
+        $submissionModule->updated_at = now();
         $submissionModule->save();
 
-        toast('Status Berhasil Diubah', 'success');
+        toast('Dokumen Berhasil Didistribusikan', 'success');
     
         return redirect()->route('doc-minutes.index');
     }

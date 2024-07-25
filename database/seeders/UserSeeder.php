@@ -5,155 +5,79 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
     public function run()
     {
-        // Seed initial users
-        $initialUsers = [
+        // Static dummy data
+        $staticUsers = [
             [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                'id' => Str::uuid()->toString(),
                 'id_role' => 1,
                 'nama' => 'Meliusa Nora Hariyanti',
                 'email' => 'meliusanorahariyanti@gmail.com',
                 'username' => 'direktur',
-                'password' => Hash::make('direktur')
+                'password' => Hash::make('direktur'),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                'id' => Str::uuid()->toString(),
                 'id_role' => 2,
                 'nama' => 'Ikhbar Ramadhan',
                 'email' => 'ramadhanikhbar2012@gmail.com',
                 'username' => 'manajerasd',
-                'password' => Hash::make('manajerasd')
+                'password' => Hash::make('manajerasd'),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                'id' => Str::uuid()->toString(),
                 'id_role' => 3,
-                'nama' => 'Ava Hernandez',
-                'email' => 'ava.hernandez@example.com',
+                'nama' => 'Rama',
+                'email' => 'sayangilolimu@gmail.com',
                 'username' => 'supervisor',
-                'password' => Hash::make('supervisor')
+                'password' => Hash::make('supervisor'),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                'id' => Str::uuid()->toString(),
                 'id_role' => 4,
-                'nama' => 'Liam Lopez',
-                'email' => 'liam.lopez@example.com',
+                'nama' => 'Caca',
+                'email' => '2041720084@student.polinema.ac.id',
                 'username' => 'stafasdasd',
-                'password' => Hash::make('stafasdasd')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'Olivia Young',
-                'email' => 'olivia.young@example.com',
-                'username' => 'oliviayoung',
-                'password' => Hash::make('password')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'Jessica Brown',
-                'email' => 'jessica.brown@example.com',
-                'username' => 'jessicabrown',
-                'password' => Hash::make('password')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'Daniel Johnson',
-                'email' => 'daniel.johnson@example.com',
-                'username' => 'danieljohnson',
-                'password' => Hash::make('password')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'Emily Davis',
-                'email' => 'emily.davis@example.com',
-                'username' => 'emilydavis',
-                'password' => Hash::make('password')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'Christopher Martinez',
-                'email' => 'christopher.martinez@example.com',
-                'username' => 'christophermartinez',
-                'password' => Hash::make('password')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'Olivia Wilson',
-                'email' => 'olivia.wilson@example.com',
-                'username' => 'oliviawilson',
-                'password' => Hash::make('password')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'James Anderson',
-                'email' => 'james.anderson@example.com',
-                'username' => 'jamesanderson',
-                'password' => Hash::make('password')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'Sophia Taylor',
-                'email' => 'sophia.taylor@example.com',
-                'username' => 'sophiataylor',
-                'password' => Hash::make('password')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'Alexander White',
-                'email' => 'alexander.white@example.com',
-                'username' => 'alexanderwhite',
-                'password' => Hash::make('password')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'Isabella Brown',
-                'email' => 'isabella.brown@example.com',
-                'username' => 'isabellabrown',
-                'password' => Hash::make('password')
-            ],
-            [
-                'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_role' => 4,
-                'nama' => 'William Moore',
-                'email' => 'william.moore@example.com',
-                'username' => 'williammoore',
-                'password' => Hash::make('password')
+                'password' => Hash::make('stafasdasd'),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ];
 
-        // Additional random users
-        // $additionalUsers = [];
-        // for ($i = 0; $i < 100; $i++) {
-        //     $additionalUsers[] = [
-        //         'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-        //         'id_role' => 4,
-        //         'nama' => 'Random User ' . ($i + 1),
-        //         'email' => 'user' . ($i + 1) . '@example.com',
-        //         'username' => 'user' . ($i + 1),
-        //         'password' => Hash::make('password') // Default password, you can change this
-        //     ];
-        // }
+        // Generate additional dynamic users
+        $numberOfDynamicUsers = 50; 
+        $dynamicUsers = [];
+        for ($i = 0; $i < $numberOfDynamicUsers; $i++) {
+            $dynamicUsers[] = [
+                'id' => Str::uuid()->toString(),
+                'id_role' => rand(1, 5), // Assuming roles exist with IDs from 1 to 5
+                'nama' => 'User ' . ($i + 1),
+                'email' => 'user' . ($i + 1) . '@example.com',
+                'username' => 'user' . ($i + 1),
+                'password' => Hash::make('password'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
 
-        // Combine initial users and additional users
-        $usersToSeed = array_merge($initialUsers);
-
-        // Insert into database
-        DB::table('users')->insert($usersToSeed);
+        // Combine static and dynamic users and insert into database
+        $allUsers = array_merge($staticUsers, $dynamicUsers);
+        DB::table('users')->insert($allUsers);
     }
 }

@@ -5,241 +5,204 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use Faker\Factory as Faker;
 
 class SubmissionModuleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
-        // Data dummy untuk submission_modules table
-        $data = [
-            [
-                'id' => \Faker\Provider\Uuid::uuid(),
-                'user_id' => DB::table('users')->first()->id,
-                'title' => 'Rapat Evaluasi Kinerja Kuartalan',
-                'purpose' => 'Evaluasi kinerja kuartalan berdasarkan hasil keuangan dan pencapaian target penjualan.',
-                'agenda' => "1. Presentasi hasil keuangan kuartal terakhir\n2. Diskusi tentang pencapaian target penjualan\n3. Perencanaan strategi pemasaran untuk kuartal mendatang\n4. Pengambilan keputusan tentang alokasi anggaran departemen",
-                'date' => '2024-07-05',
-                'time' => '09:00:00',
-                'duration' => '3 jam',
-                'type' => 'Tatap Muka',
-                'location' => 'Gedung Utama',
-                'supporting_document' => 'Laporan keuangan kuartal terakhir dan analisis pencapaian target penjualan.',
-                'status' => 'Proses Persetujuan',
-                'reason_cancelled' => '',
-                'approved_at' => now(),
-                'distributed_at' => now(),
-                'implemented_at' => '2024-07-06 13:00:00',
-                'provided_at' => '2024-07-05 12:00:00',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => \Faker\Provider\Uuid::uuid(),
-                'user_id' => DB::table('users')->skip(1)->first()->id, // Ambil user kedua
-                'title' => 'Rapat Strategi Pemasaran',
-                'purpose' => 'Membahas strategi pemasaran untuk meningkatkan penjualan pada kuartal mendatang.',
-                'agenda' => "1. Evaluasi strategi pemasaran saat ini\n2. Pembahasan ide-ide baru untuk kampanye pemasaran\n3. Penetapan anggaran untuk kampanye pemasaran",
-                'date' => '2024-07-10',
-                'time' => '10:00:00',
-                'duration' => '2 jam',
-                'type' => 'Daring',
-                'location' => 'https://example.com/meeting1',
-                'supporting_document' => 'https://example.com/meeting2',
-                'postscript' => 'Pastikan semua peserta sudah terkoneksi ke Zoom sebelum rapat dimulai.',
-                'status' => 'Sudah Disetujui',
-                'reason_cancelled' => '',
-                'approved_at' => '2024-07-08 09:00:00',
-                'distributed_at' => '2024-07-09 08:00:00',
-                'implemented_at' => '2024-07-10 12:00:00',
-                'provided_at' => '2024-07-10 14:00:00',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => \Faker\Provider\Uuid::uuid(),
-                'user_id' => DB::table('users')->skip(2)->first()->id,
-                'title' => 'Rapat Pengalokasian Anggaran',
-                'purpose' => 'Membahas pengalokasian anggaran departemen untuk proyek-proyek strategis.',
-                'agenda' => "1. Evaluasi anggaran tahun ini\n2. Penyusunan anggaran untuk proyek-proyek baru\n3. Penetapan prioritas pengalokasian anggaran",
-                'date' => '2024-07-15',
-                'time' => '14:00:00',
-                'duration' => '2.5 jam',
-                'type' => 'Tatap Muka',
-                'location' => 'Ruangan A3',
-                'supporting_document' => 'Rincian anggaran departemen dan proposal-proposal proyek.',
-                'postscript' => 'Pastikan semua peserta membawa rincian anggaran departemen masing-masing.',
-                'status' => 'Undangan Didistribusikan',
-                'reason_cancelled' => '',
-                'approved_at' => '2024-07-13 10:00:00',
-                'distributed_at' => '2024-07-14 09:00:00',
-                'implemented_at' => null,
-                'provided_at' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => \Faker\Provider\Uuid::uuid(),
-                'user_id' => DB::table('users')->skip(3)->first()->id,
-                'title' => 'Rapat Evaluasi Proyek X',
-                'purpose' => 'Mengevaluasi kemajuan dan dampak proyek X terhadap tujuan perusahaan.',
-                'agenda' => "1. Presentasi kemajuan proyek X\n2. Diskusi tentang masalah dan solusi yang dihadapi\n3. Penetapan langkah-langkah selanjutnya untuk memaksimalkan hasil proyek",
-                'date' => '2024-07-20',
-                'time' => '11:00:00',
-                'duration' => '2 jam',
-                'type' => 'Daring',
-                'location' => 'Microsoft Teams',
-                'supporting_document' => 'Laporan kemajuan proyek X dan analisis dampaknya terhadap operasional perusahaan.',
-                'postscript' => 'Pastikan semua peserta sudah memiliki akses ke Microsoft Teams sebelum rapat dimulai.',
-                'status' => 'Telah Dilaksanakan',
-                'reason_cancelled' => '',
-                'approved_at' => '2024-07-18 14:00:00',
-                'distributed_at' => '2024-07-19 13:00:00',
-                'implemented_at' => '2024-07-20 13:00:00',
-                'provided_at' => '2024-07-20 15:00:00',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => \Faker\Provider\Uuid::uuid(),
-                'user_id' => DB::table('users')->skip(4)->first()->id,
-                'title' => 'Rapat Pembahasan Laporan Keuangan',
-                'purpose' => 'Membahas hasil keuangan terkini dan menetapkan strategi keuangan ke depan.',
-                'agenda' => "1. Presentasi hasil keuangan terbaru\n2. Diskusi tentang interpretasi laporan keuangan\n3. Penetapan langkah-langkah untuk memaksimalkan profitabilitas perusahaan",
-                'date' => '2024-07-25',
-                'time' => '15:00:00',
-                'duration' => '2.5 jam',
-                'type' => 'Tatap Muka',
-                'location' => 'Ruang Rapat Utama',
-                'supporting_document' => 'Laporan keuangan terbaru dan analisis kinerja keuangan perusahaan.',
-                'postscript' => 'Pastikan semua peserta membawa salinan laporan keuangan yang akan dibahas.',
-                'status' => 'Baru Ditambahkan',
-                'reason_cancelled' => '',
-                'approved_at' => '2024-07-23 11:00:00',
-                'distributed_at' => '2024-07-24 10:00:00',
-                'implemented_at' => '2024-07-25 17:00:00',
-                'provided_at' => '2024-07-25 19:00:00',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => \Faker\Provider\Uuid::uuid(),
-                'user_id' => DB::table('users')->skip(3)->first()->id, // Ambil user keenam
-                'title' => 'Rapat Evaluasi Performa Penjualan',
-                'purpose' => 'Mengevaluasi performa penjualan produk A dan B di pasar domestik.',
-                'agenda' => "1. Presentasi hasil penjualan produk A\n2. Diskusi tentang strategi pemasaran produk B\n3. Perencanaan langkah-langkah peningkatan performa penjualan",
-                'date' => '2024-07-30',
-                'time' => '10:00:00',
-                'duration' => '2 jam',
-                'type' => 'Tatap Muka',
-                'location' => 'Ruang Diskusi',
-                'supporting_document' => 'Data penjualan produk A dan B serta analisis pasar domestik terbaru.',
-                'postscript' => 'Pastikan semua peserta sudah mempersiapkan laporan penjualan masing-masing.',
-                'status' => 'Dibatalkan',
-                'reason_cancelled' => 'Bencana alam di daerah yang mempengaruhi sebagian besar peserta.',
-                'approved_at' => now(),
-                'distributed_at' => now(),
-                'implemented_at' => null,
-                'provided_at' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => \Faker\Provider\Uuid::uuid(),
-                'user_id' => DB::table('users')->skip(1)->first()->id, // Ambil user ketujuh
-                'title' => 'Rapat Evaluasi Proyek Y',
-                'purpose' => 'Mengevaluasi proyek Y dan mengevaluasi kinerja tim proyek.',
-                'agenda' => "1. Presentasi kemajuan proyek Y\n2. Diskusi tentang hambatan yang dihadapi\n3. Penetapan langkah-langkah untuk memastikan proyek selesai tepat waktu",
-                'date' => '2024-08-05',
-                'time' => '14:00:00',
-                'duration' => '2.5 jam',
-                'type' => 'Daring',
-                'location' => 'Google Meet',
-                'supporting_document' => 'Laporan kemajuan proyek Y dan analisis kinerja tim proyek.',
-                'postscript' => 'Pastikan semua peserta sudah memiliki akses ke Google Meet sebelum rapat dimulai.',
-                'status' => 'Sudah Disetujui',
-                'reason_cancelled' => '',
-                'approved_at' => '2024-08-03 10:00:00',
-                'distributed_at' => '2024-08-04 09:00:00',
-                'implemented_at' => '2024-08-05 16:00:00',
-                'provided_at' => '2024-08-05 18:00:00',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => \Faker\Provider\Uuid::uuid(),
-                'user_id' => DB::table('users')->skip(2)->first()->id, // Ambil user kedelapan
-                'title' => 'Rapat Evaluasi Performa IT',
-                'purpose' => 'Mengevaluasi performa departemen IT dan merencanakan peningkatan infrastruktur IT.',
-                'agenda' => "1. Presentasi hasil evaluasi sistem IT saat ini\n2. Diskusi tentang kebutuhan infrastruktur IT mendatang\n3. Penetapan anggaran untuk peningkatan sistem IT",
-                'date' => '2024-08-10',
-                'time' => '11:00:00',
-                'duration' => '2 jam',
-                'type' => 'Tatap Muka',
-                'location' => 'Ruang IT',
-                'supporting_document' => 'Laporan evaluasi sistem IT dan rekomendasi peningkatan infrastruktur.',
-                'postscript' => 'Pastikan semua peserta telah mempersiapkan analisis kebutuhan IT masing-masing.',
-                'status' => 'Undangan Didistribusikan',
-                'reason_cancelled' => '',
-                'approved_at' => '2024-08-08 14:00:00',
-                'distributed_at' => '2024-08-09 13:00:00',
-                'implemented_at' => null,
-                'provided_at' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => \Faker\Provider\Uuid::uuid(),
-                'user_id' => DB::table('users')->skip(3)->first()->id, // Ambil user kesembilan
-                'title' => 'Rapat Evaluasi Layanan Pelanggan',
-                'purpose' => 'Mengevaluasi kepuasan pelanggan dan merencanakan peningkatan layanan pelanggan.',
-                'agenda' => "1. Presentasi hasil survei kepuasan pelanggan\n2. Diskusi tentang perbaikan layanan pelanggan\n3. Penetapan langkah-langkah untuk meningkatkan kepuasan pelanggan",
-                'date' => '2024-08-15',
-                'time' => '13:00:00',
-                'duration' => '2.5 jam',
-                'type' => 'Tatap Muka',
-                'location' => 'Ruang Layanan Pelanggan',
-                'supporting_document' => 'Hasil survei kepuasan pelanggan dan analisis tingkat kepuasan saat ini.',
-                'postscript' => 'Pastikan semua peserta telah mempersiapkan rencana perbaikan layanan pelanggan.',
-                'status' => 'Telah Dilaksanakan',
-                'reason_cancelled' => '',
-                'approved_at' => '2024-08-13 11:00:00',
-                'distributed_at' => '2024-08-14 10:00:00',
-                'implemented_at' => '2024-08-15 15:00:00',
-                'provided_at' => '2024-08-15 17:00:00',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => \Faker\Provider\Uuid::uuid(),
-                'user_id' => DB::table('users')->skip(4)->first()->id, // Ambil user kesepuluh
-                'title' => 'Rapat Evaluasi R&D',
-                'purpose' => 'Mengevaluasi progres dan merencanakan inovasi di bidang R&D.',
-                'agenda' => "1. Presentasi kemajuan proyek R&D\n2. Diskusi tentang peluang inovasi baru\n3. Penetapan anggaran untuk riset dan pengembangan",
-                'date' => '2024-08-20',
-                'time' => '09:00:00',
-                'duration' => '3 jam',
-                'type' => 'Daring',
-                'location' => 'Microsoft Teams',
-                'supporting_document' => 'Laporan kemajuan proyek R&D dan analisis potensi inovasi pasar.',
-                'postscript' => 'Pastikan semua peserta sudah memiliki akses ke Microsoft Teams sebelum rapat dimulai.',
-                'status' => 'Notula Tersedia',
-                'reason_cancelled' => '',
-                'approved_at' => '2024-08-18 09:00:00',
-                'distributed_at' => '2024-08-19 08:00:00',
-                'implemented_at' => '2024-08-20 12:00:00',
-                'provided_at' => '2024-08-20 15:00:00',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Data untuk user_id
+        $userIds = DB::table('users')->pluck('id')->toArray();
+
+        // Data untuk title
+        $titles = [
+            'Rapat Evaluasi Kinerja Kuartalan',
+            'Pertemuan Strategi Pengembangan Produk',
+            'Diskusi Rencana Pemasaran Tahunan',
+            'Presentasi Proyek Baru',
+            'Rapat Koordinasi Tim Keuangan',
+            'Forum Diskusi Keamanan Data',
+            'Pertemuan Evaluasi Teknis',
+            'Rapat Pencapaian KPI Bulanan',
+            'Diskusi Implementasi Sistem Baru',
+            'Pertemuan Tim Riset dan Pengembangan',
+            'Workshop Inovasi Produk',
+            'Rapat Perencanaan Anggaran',
+            'Presentasi Hasil Penelitian',
+            'Pertemuan Review Performa Tim',
+            'Diskusi Pengembangan Bisnis',
+            'Rapat Pembahasan Kebijakan Internal',
+            'Forum Evaluasi Proyek IT',
+            'Pertemuan Persiapan Acara Besar',
+            'Rapat Evaluasi Vendor',
+            'Presentasi Strategi Penjualan',
+            'Diskusi Rencana Pengembangan Sumber Daya Manusia'
         ];
 
-        // Insert data ke dalam tabel submission_modules
-        foreach ($data as $item) {
-            DB::table('submission_modules')->insert($item);
+        // Data untuk agenda
+        $agendas = [
+            "1. Presentasi hasil terkini\n2. Diskusi tentang roadmap kedepan\n3. Perencanaan strategi pemasaran untuk kuartal mendatang\n4. Pengambilan keputusan terkait alokasi anggaran",
+            "1. Evaluasi kinerja produk\n2. Diskusi strategi pengembangan\n3. Perencanaan langkah-langkah kedepan\n4. Peninjauan ulang rencana pemasaran",
+            "1. Presentasi rencana pemasaran tahunan\n2. Diskusi strategi penjualan\n3. Evaluasi hasil kampanye\n4. Perencanaan promosi dan branding",
+            "1. Presentasi proyek baru\n2. Diskusi teknis dan arsitektur\n3. Perencanaan fase implementasi\n4. Evaluasi risiko dan pengelolaan proyek",
+            "1. Evaluasi laporan keuangan\n2. Diskusi tentang optimisasi keuangan\n3. Perencanaan strategi penghematan\n4. Peninjauan kebijakan keuangan",
+            "1. Diskusi keamanan data terkini\n2. Presentasi risiko keamanan\n3. Evaluasi tindak lanjut\n4. Perencanaan tindakan keamanan",
+            "1. Evaluasi teknis proyek\n2. Diskusi pengembangan teknologi\n3. Perencanaan fase uji coba\n4. Peninjauan arsitektur sistem",
+            "1. Presentasi pencapaian KPI\n2. Diskusi strategi peningkatan\n3. Evaluasi rencana aksi\n4. Perencanaan langkah-langkah kedepan",
+            "1. Diskusi implementasi sistem baru\n2. Presentasi roadmap sistem\n3. Evaluasi integrasi\n4. Perencanaan tahap rollout",
+            "1. Diskusi rencana riset\n2. Presentasi hasil riset\n3. Evaluasi strategi pengembangan\n4. Perencanaan langkah-langkah penelitian",
+            "1. Workshop inovasi produk\n2. Diskusi ide-ide baru\n3. Evaluasi konsep produk\n4. Perencanaan pengembangan produk",
+            "1. Evaluasi anggaran departemen\n2. Presentasi laporan anggaran\n3. Diskusi alokasi anggaran\n4. Peninjauan kebijakan keuangan",
+            "1. Presentasi hasil penelitian\n2. Diskusi temuan penelitian\n3. Evaluasi metodologi\n4. Perencanaan publikasi dan penyebaran",
+            "1. Review performa tim\n2. Diskusi kinerja individu\n3. Evaluasi peningkatan performa\n4. Perencanaan pelatihan dan pengembangan",
+            "1. Diskusi pengembangan bisnis\n2. Presentasi peluang bisnis\n3. Evaluasi strategi pasar\n4. Perencanaan pengembangan bisnis",
+            "1. Pembahasan kebijakan internal\n2. Diskusi implementasi kebijakan\n3. Evaluasi dampak kebijakan\n4. Perencanaan komunikasi kebijakan",
+            "1. Evaluasi proyek IT\n2. Diskusi implementasi teknologi\n3. Perencanaan fase pengembangan\n4. Peninjauan roadmap teknologi",
+            "1. Persiapan acara besar\n2. Presentasi rencana acara\n3. Diskusi logistik acara\n4. Perencanaan promosi dan pelaksanaan",
+            "1. Evaluasi vendor\n2. Diskusi kinerja vendor\n3. Perencanaan strategi vendor\n4. Peninjauan kontrak dan kerja sama",
+            "1. Presentasi strategi penjualan\n2. Diskusi strategi pemasaran\n3. Evaluasi target penjualan\n4. Perencanaan promosi penjualan",
+            "1. Diskusi rencana pengembangan SDM\n2. Presentasi program pengembangan\n3. Evaluasi kebutuhan SDM\n4. Perencanaan pengembangan karyawan"
+        ];
+
+        // Data untuk purpose
+        $purposes = [
+            'Tujuan rapat ini adalah untuk membahas strategi pemasaran baru.',
+            'Rapat ini bertujuan untuk mengevaluasi hasil proyek terbaru.',
+            'Diskusi strategis untuk meningkatkan performa tim keuangan.',
+            'Evaluasi teknis mengenai implementasi sistem baru.',
+            'Pertemuan untuk merencanakan pengembangan produk baru.',
+            'Diskusi penting terkait kebijakan internal perusahaan.',
+            'Presentasi hasil riset terkini dan diskusi temuan.',
+            'Forum evaluasi proyek IT dan roadmap teknologi.',
+            'Pertemuan untuk mengevaluasi kinerja vendor terkini.',
+            'Diskusi tentang pengembangan SDM dan program pelatihan.',
+            'Rapat koordinasi untuk merencanakan acara besar.',
+            'Pertemuan strategis untuk diskusi rencana anggaran.',
+            'Evaluasi strategi penjualan dan promosi produk.',
+            'Presentasi laporan keuangan dan evaluasi hasil kampanye.',
+            'Diskusi mengenai keamanan data dan tindak lanjut.',
+            'Pertemuan untuk merancang rencana pemasaran tahunan.',
+            'Presentasi roadmap sistem baru dan evaluasi integrasi.',
+            'Forum diskusi keamanan data terbaru dan risiko.',
+            'Rapat untuk merancang strategi peningkatan KPI.',
+            'Evaluasi hasil riset dan presentasi publikasi.',
+            'Pertemuan untuk merencanakan pengembangan bisnis baru.'
+        ];
+
+        // Data untuk status
+        $statuses = [
+            'Baru Ditambahkan',
+            'Proses Persetujuan',
+            'Sudah Disetujui',
+            'Undangan Didistribusikan',
+            'Telah Dilaksanakan',
+            'Dibatalkan',
+            'Notula Tersedia'
+        ];
+
+        // Inisialisasi array untuk menyimpan data rapat
+        $meetings = [];
+
+        // Generate 20 data dummy
+        for ($i = 0; $i < 20; $i++) {
+            $status = $statuses[array_rand($statuses)];
+            $reasonCancelled = '';
+            if ($status == 'Dibatalkan' || $status == 'Tidak Disetujui') {
+                // Generate random reason for cancellation
+                $reasons = [
+                    'Ada keadaan darurat yang mendesak.',
+                    'Perubahan jadwal yang tidak dapat dihindari.',
+                    'Kondisi cuaca yang memburuk.',
+                    'Kesalahan administrasi dalam perencanaan.',
+                    'Ketidaksediaan peserta kunci dalam rapat.',
+                    'Perubahan strategis yang mendadak.',
+                    'Kesalahan komunikasi dalam persiapan.',
+                    'Ketidaksesuaian lokasi atau fasilitas.',
+                    'Permasalahan teknis yang tidak terduga.'
+                ];
+                $reasonCancelled = $reasons[array_rand($reasons)];
+            }
+
+            $postscript = [
+                'Notula rapat akan segera didistribusikan kepada peserta.',
+                    'Mohon untuk meninjau kembali hasil rapat untuk diskusi lebih lanjut.',
+                    'Apabila ada yang perlu ditambahkan, silakan berikan masukan.',
+                    'Kami berterima kasih atas partisipasi aktif dari seluruh peserta rapat.'
+            ]; 
+
+            $meeting = [
+                'id' => \Faker\Provider\Uuid::uuid(),
+                'user_id' => $userIds[array_rand($userIds)], // Ambil secara acak dari user IDs yang tersedia
+                'title' => $titles[array_rand($titles)], // Ambil secara acak dari judul yang tersedia
+                'purpose' => $purposes[array_rand($purposes)], // Ambil secara acak dari tujuan yang tersedia
+                'agenda' => $agendas[array_rand($agendas)], // Ambil secara acak dari agenda yang tersedia
+                'date' => date('Y-m-d', strtotime("+{$i} days")), // Tanggal dari hari ini ditambah $i hari
+                'time' => '09:00:00',
+                'duration' => '2 jam',
+                'type' => $i % 2 == 0 ? 'Tatap Muka' : 'Daring', // Bergantian antara Tatap Muka dan Daring
+                'location' => 'Gedung Utama',
+                'supporting_document' => 'Dokumen pendukung belum tersedia.',
+                'postscript' => $postscript[array_rand($postscript)],
+                'status' => $status, // Ambil secara acak dari status yang tersedia
+                'reason_cancelled' => $reasonCancelled, // Tambahkan alasan jika statusnya Dibatalkan atau Tidak Disetujui
+                'approved_at' => date('Y-m-d H:i:s', strtotime("+{$i} days +1 hour")), // Disetujui 1 jam setelah dibuat
+                'distributed_at' => date('Y-m-d H:i:s', strtotime("+{$i} days +2 hours")), // Didistribusikan 2 jam setelah disetujui
+                'implemented_at' => date('Y-m-d H:i:s', strtotime("+{$i} days +4 hours")), // Diimplementasikan 4 jam setelah disetujui
+                'provided_at' => date('Y-m-d H:i:s', strtotime("+{$i} days +3 hours")), // Persiapan 3 jam sebelum implementasi
+                'created_at' => now(), // Waktu pembuatan saat ini
+                'updated_at' => Carbon::now()->subDays(rand(1, 30))->subMinutes(rand(1, 1440)), // Waktu pembaruan secara random antara 1 hari - 30 hari yang lalu
+            ];
+
+            $meetings[] = $meeting;
         }
+
+        // Tambahkan 1 data statis dengan tanggal hari ini
+        $status = $statuses[array_rand($statuses)];
+        $reasonCancelled = '';
+        if ($status == 'Dibatalkan' || $status == 'Tidak Disetujui') {
+            // Generate random reason for cancellation
+            $reasons = [
+                'Ada keadaan darurat yang mendesak.',
+                'Perubahan jadwal yang tidak dapat dihindari.',
+                'Kondisi cuaca yang memburuk.',
+                'Kesalahan administrasi dalam perencanaan.',
+                'Ketidaksediaan peserta kunci dalam rapat.',
+                'Perubahan strategis yang mendadak.',
+                'Kesalahan komunikasi dalam persiapan.',
+                'Ketidaksesuaian lokasi atau fasilitas.',
+                'Permasalahan teknis yang tidak terduga.'
+            ];
+            $reasonCancelled = $reasons[array_rand($reasons)];
+        }
+
+        $meetingToday = [
+            'id' => \Faker\Provider\Uuid::uuid(),
+            'user_id' => $userIds[array_rand($userIds)], // Ambil secara acak dari user IDs yang tersedia
+            'title' => $titles[array_rand($titles)], // Ambil secara acak dari judul yang tersedia
+            'purpose' => $purposes[array_rand($purposes)], // Ambil secara acak dari tujuan yang tersedia
+            'agenda' => $agendas[array_rand($agendas)], // Ambil secara acak dari agenda yang tersedia
+            'date' => now(),
+            'time' => '09:00:00',
+            'duration' => '2 jam',
+            'type' => 'Tatap Muka', // Contoh type diset ke Tatap Muka
+            'location' => 'Gedung Utama',
+            'supporting_document' => 'Dokumen pendukung belum tersedia.',
+            'postscript' => $postscript[array_rand($postscript)],
+            'status' => 'Undangan Didistribusikan',
+            'reason_cancelled' => $reasonCancelled, // Tambahkan alasan jika statusnya Dibatalkan atau Tidak Disetujui
+            'approved_at' => date('Y-m-d H:i:s', strtotime('+1 hour')), // Disetujui 1 jam setelah dibuat
+            'distributed_at' => date('Y-m-d H:i:s', strtotime('+2 hours')), // Didistribusikan 2 jam setelah disetujui
+            'implemented_at' => date('Y-m-d H:i:s', strtotime('+4 hours')), // Diimplementasikan 4 jam setelah disetujui
+            'provided_at' => date('Y-m-d H:i:s', strtotime('+3 hours')), // Persiapan 3 jam sebelum implementasi
+            'created_at' => now(), // Waktu pembuatan saat ini
+            'updated_at' => Carbon::now()->subDays(rand(1, 30))->subMinutes(rand(1, 1440)), // Waktu pembaruan secara random antara 1 hari - 30 hari yang lalu
+        ];
+
+        $meetings[] = $meetingToday;
+
+        // Masukkan data ke dalam tabel submissions (sesuaikan nama tabel jika berbeda)
+        DB::table('submission_modules')->insert($meetings);
     }
 }

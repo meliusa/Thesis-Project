@@ -24,15 +24,6 @@ class DatabaseSeeder extends Seeder
             JobPositionSeeder::class,
             JobTypeSeeder::class,
             AdminsTableSeeder::class,
-            MeetingRequestSeeder::class,
-            TopicSeeder::class,
-            AgendaSeeder::class,
-            MaterialSeeder::class,
-            PresenceSeeder::class,
-            MinuteSeeder::class,
-            // PollingSeeder::class,
-            // PollingDetailSeeder::class,
-            // VoteSeeder::class,
             
             // TA
             SubmissionModuleSeeder::class,

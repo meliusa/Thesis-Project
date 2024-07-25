@@ -5,52 +5,85 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Faker\Generator as Faker;
 
 class MeetingParticipantSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
     public function run()
     {
+        // Ambil semua agenda_id dari submission_modules
+        $agendaIds = DB::table('submission_modules')->pluck('id')->toArray();
 
-        $faker = \Faker\Factory::create();
-        
-        // Ambil semua submission_modules dan users
-        $submissionModules = DB::table('submission_modules')->pluck('id');
-        $users = DB::table('users')->pluck('id');
+        // Ambil semua participant_id dari users
+        $participantIds = DB::table('users')->pluck('id')->toArray();
 
-        // Jumlah data yang ingin dimasukkan
-        $numberOfParticipants = 15; // Misalnya ingin memasukkan 500 partisipan
+        // Array untuk menampung data partisipan
+        $participants = [];
 
-        // Array untuk memantau participant_id yang sudah dipilih
-        $chosenParticipants = [];
+        // Loop untuk setiap agenda_id
+        foreach ($agendaIds as $agendaId) {
+            // Tentukan jumlah partisipan acak antara 1 hingga 5
+            $numParticipants = rand(1, 50);
 
-        // Loop untuk membuat data dummy
-        for ($i = 0; $i < $numberOfParticipants; $i++) {
-            // Ambil random agenda_id
-            $agendaId = $submissionModules->random();
+            // Pilih secara acak participant_id
+            $selectedParticipants = array_rand(array_flip($participantIds), $numParticipants);
 
-            // Ambil participant_id yang belum dipilih sebelumnya
-            do {
-                $participantId = $users->random();
-            } while (in_array($participantId, $chosenParticipants));
+            // Loop untuk setiap participant yang dipilih
+            foreach ((array) $selectedParticipants as $participantId) {
+                // Tetapkan apakah participant mengkonfirmasi kehadiran
+                $confirmedAt = rand(0, 1) ? now()->subHours(rand(1, 24)) : null;
 
-            // Tandai participant_id ini sudah dipilih
-            $chosenParticipants[] = $participantId;
+                // Tetapkan apakah participant awalnya tidak hadir
+                $initialAbsenAt = rand(0, 1) ? now()->subHours(rand(1, 24)) : null;
 
-            // Insert ke dalam tabel meeting_participants
-            DB::table('meeting_participants')->insert([
-                'id' => Str::uuid(),
-                'agenda_id' => $agendaId,
-                'participant_id' => $participantId,
-                'confirmed_at' => $faker->datetime(),
-                'initial_absen_at' => $faker->datetime(),
-                'final_absen_at' => $faker->optional()->datetime(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+                // Tetapkan apakah participant akhirnya tidak hadir
+                $finalAbsenAt = $initialAbsenAt && rand(0, 1) ? now()->subHours(rand(1, 24)) : null;
+
+                // Alasan tidak hadir (jika finalAbsenAt terisi)
+                $notAttendingReason = $finalAbsenAt ? $this->getRandomAbsenceReason() : null;
+
+                // Data partisipan
+                $participants[] = [
+                    'id' => Str::uuid()->toString(),
+                    'agenda_id' => $agendaId,
+                    'participant_id' => $participantId,
+                    'confirmed_at' => $confirmedAt,
+                    'initial_absen_at' => $initialAbsenAt,
+                    'final_absen_at' => $finalAbsenAt,
+                    'not_attending_reason' => $notAttendingReason,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
         }
+
+        // Masukkan data partisipan ke dalam tabel meeting_participants
+        DB::table('meeting_participants')->insert($participants);
+    }
+
+    /**
+     * Mendapatkan alasan tidak hadir secara acak.
+     *
+     * @return string
+     */
+    private function getRandomAbsenceReason()
+    {
+        $reasons = [
+            'Ada keadaan darurat yang mendesak.',
+            'Perubahan jadwal yang tidak dapat dihindari.',
+            'Kondisi cuaca yang memburuk.',
+            'Kesalahan administrasi dalam perencanaan.',
+            'Ketidaksediaan peserta kunci dalam rapat.',
+            'Perubahan strategis yang mendadak.',
+            'Kesalahan komunikasi dalam persiapan.',
+            'Ketidaksesuaian lokasi atau fasilitas.',
+            'Permasalahan teknis yang tidak terduga.',
+        ];
+
+        return $reasons[array_rand($reasons)];
     }
 }

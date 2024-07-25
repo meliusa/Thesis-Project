@@ -147,7 +147,6 @@
                                                     <th class="min-w-62.5px">Tipe Rapat</th>
                                                     <th class="min-w-62.5px">Tanggal dan Jam Rapat</th>
                                                     <th class="min-w-62.5px">Presensi Awal</th>
-                                                    <th class="min-w-62.5px">Presensi Akhir</th>
                                                     <th class="text-end min-w-62.5px">Aksi</th>
                                                 </tr>
                                                 <!--end::Table row-->
@@ -171,8 +170,8 @@
                                                         {{ \Carbon\Carbon::parse($submissionModule->time)->format('H:i:s') }}
                                                     </td>
                                                     <td>
-                                                        @if (\Carbon\Carbon::parse($submissionModule->date)->isFuture()) 
-                                                        Belum Tersedia
+                                                        @if (\Carbon\Carbon::parse($submissionModule->date)->isFuture())
+                                                        Belum Saatnya
                                                         @else
                                                         <form
                                                             action="{{ route('meeting-participants.update-initial-absen-at', $submissionModule->id) }}"
@@ -182,14 +181,14 @@
                                                             <input type="hidden" name="agenda_id"
                                                                 value="{{ $submissionModule->id }}">
                                                             <button type="submit"
-                                                                class="btn btn-light-primary btn-sm validasipresence">Presensi
+                                                                class="btn btn-light-success btn-sm validasipresence">Presensi
                                                                 Awal</button>
                                                         </form>
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if (\Carbon\Carbon::parse($submissionModule->date)->isFuture()) 
-                                                        Belum Tersedia
+                                                        @if (\Carbon\Carbon::parse($submissionModule->date)->isFuture())
+                                                        Belum Saatnya
                                                         @else
                                                         <form
                                                             action="{{ route('meeting-participants.update-final-absen-at', $submissionModule->id) }}"
@@ -199,7 +198,7 @@
                                                             <input type="hidden" name="agenda_id"
                                                                 value="{{ $submissionModule->id }}">
                                                             <button type="submit"
-                                                                class="btn btn-light-primary btn-sm validasipresence">Presensi
+                                                                class="btn btn-light-success btn-sm validasipresence">Presensi
                                                                 Akhir</button>
                                                         </form>
                                                         @endif
@@ -236,6 +235,7 @@
         <!--end::Post-->
     </div>
     <!--end::Content-->
+
 </section>
 @endsection
 

@@ -54,42 +54,286 @@
         <div class="post d-flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
+                {{-- filter --}}
+                <div class="card mb-5">
+                    <!--begin::Card body-->
+                    <div class="card-body py-4">
+                        <!--begin::Card-->
+                        <div class="card">
+                            <!--begin::Card header-->
+                            <div class="card-header border-0 pt-6">
+                                <!--begin::Card title-->
+                                <div class="card-title text-muted">
+                                    <span class="fs-5 m-3 pb-5">Kategori : </span>
+                                    <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+                                        <li class="nav-item">
+                                            <a class="nav-link active btn btn-flex btn-active-primary"
+                                                data-bs-toggle="tab" href="#kt_tab_pane_0">
+                                                <span class="d-flex flex-column align-items-start">
+                                                    <span class="fs-5">Semua Data</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link btn btn-flex btn-active-success" data-bs-toggle="tab"
+                                                href="#kt_tab_pane_1">
+                                                <span class="d-flex flex-column align-items-start">
+                                                    <span class="fs-5">Modul
+                                                        Pengajuan</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link btn btn-flex btn-active-info" data-bs-toggle="tab"
+                                                href="#kt_tab_pane_2">
+                                                <span class="d-flex flex-column align-items-start">
+                                                    <span class="fs-5">Tindak
+                                                        Lanjut</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link btn btn-flex btn-active-danger" data-bs-toggle="tab"
+                                                href="#kt_tab_pane_3">
+                                                <span class="d-flex flex-column align-items-start">
+                                                    <span class="fs-5">Dibatalkan</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--begin::Card title-->
+                            </div>
+                            <!--end::Card header-->
+                        </div>
+                    </div>
+                    <!--end::Card body-->
+                </div>
                 <!--begin::Card-->
                 <div class="card">
                     <!--begin::Card body-->
                     <div class="card-body py-4">
-
-                        <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_1">Modul
-                                    Pengajuan</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_2">Tindak Lanjut</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_3">Dibatalkan</a>
-                            </li>
-                            {{-- <li class="nav-item ms-auto">
-                                <!-- ms-auto untuk memindahkan ke kanan -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_add_submission_module">
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                                transform="rotate(-90 11.364 20.364)" fill="black" />
-                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->Tambah Data
-                                </button>
-                            </li> --}}
-                        </ul>
-
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+                            <div class="tab-pane fade show active" id="kt_tab_pane_0" role="tabpanel">
+                                <!--begin::Card-->
+                                <div class="card">
+                                    <!--begin::Card header-->
+                                    <div class="card-header border-0 pt-6">
+                                        <!--begin::Card title-->
+                                        <div class="card-title">
+                                            <!--begin::Search-->
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                                <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546"
+                                                            height="2" rx="1" transform="rotate(45 17.0365 15.1223)"
+                                                            fill="black" />
+                                                        <path
+                                                            d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                                                            fill="black" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                                <input type="text" data-kt-filter="search_tab0"
+                                                    class="form-control form-control w-250px ps-14"
+                                                    placeholder="Cari Data" />
+                                            </div>
+                                            <!--end::Search-->
+                                        </div>
+                                        <!--begin::Card title-->
+                                        <!--begin::Card toolbar-->
+                                        <div class="card-toolbar">
+                                            <!--begin::Toolbar-->
+                                            <div class="d-flex justify-content-end">
+                                                <!--begin::Add user-->
+                                                <a href="{{ route('submission-modules.create') }}" type="button"
+                                                    class="btn btn-primary">
+                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                                                    <span class="svg-icon svg-icon-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none">
+                                                            <rect opacity="0.5" x="11.364" y="20.364" width="16"
+                                                                height="2" rx="1" transform="rotate(-90 11.364 20.364)"
+                                                                fill="black" />
+                                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
+                                                                fill="black" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->Tambah Data
+                                                </a>
+                                                <!--end::Add user-->
+                                            </div>
+                                            <!--end::Toolbar-->
+                                        </div>
+                                        <!--end::Card toolbar-->
+                                    </div>
+                                    <!--end::Card header-->
+                                    <!--begin::Card body-->
+                                    <div class="card-body py-4">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5"
+                                            id="kt_datatable_submission_module_tab0">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-62.5px">No</th>
+                                                    <th class="min-w-125px">Judul Rapat</th>
+                                                    <th class="min-w-125px">Status</th>
+                                                    <th class="min-w-125px">Terakhir Diperbarui</th>
+                                                    <th class="text-end min-w-125px">Aksi</th>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-bold">
+                                                @foreach ($submissionModules as $submissionModule_tab0)
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    <!--begin::Job=-->
+                                                    <td>
+                                                        {{ $loop->iteration }}
+                                                    </td>
+                                                    <td> <a href="{{ route('submission-modules.details', $submissionModule_tab0->id) }}"
+                                                            style="text-decoration: none; color: inherit;"
+                                                            class="text-hover-primary">
+                                                            {{ $submissionModule_tab0->title }} ( ID :
+                                                            {{ $submissionModule_tab0->id }})
+                                                        </a></td>
+                                                    <td>
+                                                        @php
+                                                        $statusResult = '';
+                                                        switch($submissionModule_tab0->status) {
+                                                        case 'Proses Persetujuan':
+                                                        $statusResult = 'warning';
+                                                        break;
+                                                        case 'Sudah Disetujui':
+                                                        $statusResult = 'success';
+                                                        break;
+                                                        case 'Undangan Didistribusikan':
+                                                        $statusResult = 'primary';
+                                                        break;
+                                                        case 'Telah Dilaksanakan':
+                                                        $statusResult = 'success';
+                                                        break;
+                                                        case 'Dibatalkan':
+                                                        $statusResult = 'danger';
+                                                        break;
+                                                        case 'Baru Ditambahkan':
+                                                        $statusResult = 'secondary';
+                                                        break;
+                                                        case 'Notula Tersedia':
+                                                        $statusResult = 'info';
+                                                        break;
+                                                        }
+                                                        @endphp
+                                                        <div class="badge badge-light-{{ $statusResult }} fw-bolder">
+                                                            {{ $submissionModule_tab0->status }}
+                                                        </div>
+                                                    </td>
+                                                    <td> {{ \Carbon\Carbon::parse($submissionModule_tab0->updated_at)->format('d-m-Y H:i:s') }}
+                                                    </td>
+
+                                                    <!--begin::Action=-->
+                                                    <td class="text-end">
+                                                        <a href="#"
+                                                            class="btn btn-light btn-active-light-primary btn-sm"
+                                                            data-kt-menu-trigger="click"
+                                                            data-kt-menu-placement="bottom-end">Aksi
+                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                                                            <span class="svg-icon svg-icon-5 m-0">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none">
+                                                                    <path
+                                                                        d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                                                                        fill="black" />
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon--></a>
+                                                        <!--begin::Menu-->
+                                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
+                                                            data-kt-menu="true">
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3">
+                                                                <a href="{{ route('submission-modules.details', $submissionModule_tab0->id) }}"
+                                                                    class="menu-link px-3">Detail</a>
+                                                            </div>
+                                                            <!--end::Menu item-->
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3">
+                                                                <a href="{{ route('submission-modules.edit', $submissionModule_tab0->id) }}"
+                                                                    class="menu-link px-3 validasiupdate"
+                                                                    data-submissionmodule-id="{{ $submissionModule_tab0->id }}"
+                                                                    data-submissionmodule-status="{{ $submissionModule_tab0->status }}">Ubah
+                                                                    Data
+                                                                </a>
+                                                            </div>
+                                                            <!--end::Menu item-->
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3">
+                                                                <form class="form-delete"
+                                                                    action="{{ route('submission-modules.destroy', $submissionModule_tab0->id) }}"
+                                                                    method="post">
+                                                                    @method('delete')
+                                                                    @csrf
+                                                                    <button
+                                                                        class="menu-link px-3 btn btn-sm validasidestroy"
+                                                                        type="submit"
+                                                                        data-submissionmodule-status="{{ $submissionModule_tab0->status }}">
+                                                                        Hapus
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                            <!--end::Menu item-->
+                                                            <!--begin::Menu item-->
+                                                            @if(auth()->user()->id_role == 3 || auth()->user()->id_role
+                                                            == 4)
+                                                            <div class="menu-item px-3">
+                                                                <a href="#" class="menu-link px-3 validasiupdatestatus"
+                                                                    data-submissionmodule-id="{{ $submissionModule_tab0->id }}"
+                                                                    data-submissionmodule-status="{{ $submissionModule_tab0->status }}">Ubah
+                                                                    Status</a>
+                                                                </button>
+                                                            </div>
+                                                            @endif
+                                                            <!--end::Menu item-->
+                                                        </div>
+                                                        <!--end::Menu-->
+                                                    </td>
+                                                    <!--end::Action=-->
+                                                    <!--end::Job=-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                                @endforeach
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                            data-bs-target="#description_tab0">
+                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none">
+                                                    <!-- Ganti path SVG dengan tanda seru -->
+                                                    <path
+                                                        d="M12 4C12.5523 4 13 4.44772 13 5V11C13 11.5523 12.5523 12 12 12C11.4477 12 11 11.5523 11 11V5C11 4.44772 11.4477 4 12 4Z"
+                                                        fill="black" />
+                                                    <path
+                                                        d="M12 13C12.5523 13 13 13.4477 13 14V17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17V14C11 13.4477 11.4477 13 12 13Z"
+                                                        fill="black" />
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->Tampilkan Keterangan</button>
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Card-->
+                            </div>
+                            <div class="tab-pane fade" id="kt_tab_pane_1" role="tabpanel">
                                 <!--begin::Card-->
                                 <div class="card">
                                     <!--begin::Card header-->
@@ -264,7 +508,8 @@
                                                             </div>
                                                             <!--end::Menu item-->
                                                             <!--begin::Menu item-->
-                                                            @if(auth()->user()->id_role == 3 || auth()->user()->id_role == 4)
+                                                            @if(auth()->user()->id_role == 3 || auth()->user()->id_role
+                                                            == 4)
                                                             <div class="menu-item px-3">
                                                                 <a href="#" class="menu-link px-3 validasiupdatestatus"
                                                                     data-submissionmodule-id="{{ $submissionModule_tab1->id }}"
@@ -431,10 +676,33 @@
                                                             <!--end::Menu item-->
                                                             <!--begin::Menu item-->
                                                             <div class="menu-item px-3">
+                                                                <a href="{{ route('submission-modules.edit', $submissionModule_tab2->id) }}"
+                                                                    class="menu-link px-3 validasiupdate"
+                                                                    data-submissionmodule-id="{{ $submissionModule_tab2->id }}"
+                                                                    data-submissionmodule-status="{{ $submissionModule_tab2->status }}">Ubah
+                                                                    Data</a>
+                                                                </button>
                                                             </div>
                                                             <!--end::Menu item-->
                                                             <!--begin::Menu item-->
-                                                            @if(auth()->user()->id_role == 3 || auth()->user()->id_role == 4)
+                                                            <div class="menu-item px-3">
+                                                                <form class="form-delete"
+                                                                    action="{{ route('submission-modules.destroy', $submissionModule_tab2->id) }}"
+                                                                    method="post">
+                                                                    @method('delete')
+                                                                    @csrf
+                                                                    <button
+                                                                        class="menu-link px-3 btn btn-sm validasidestroy"
+                                                                        type="submit"
+                                                                        data-submissionmodule-status="{{ $submissionModule_tab2->status }}">
+                                                                        Hapus
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                            <!--end::Menu item-->
+                                                            <!--begin::Menu item-->
+                                                            @if(auth()->user()->id_role == 3 || auth()->user()->id_role
+                                                            == 4)
                                                             <div class="menu-item px-3">
                                                                 <a href="#" class="menu-link px-3 validasiupdatestatus"
                                                                     data-submissionmodule-id="{{ $submissionModule_tab2->id }}"
@@ -572,7 +840,7 @@
                                                             {{ $submissionModule_tab3->status }}
                                                         </div>
                                                     </td>
-                                                    <td> {{ \Carbon\Carbon::parse($submissionModule_tab3->updated_at)->format('d-m-Y H:i:s') }}
+                                                    <td> {{ \Carbon\Carbon::parse($submissionModule_tab3->updated_at)->format('Y-m-d H:i:s') }}
                                                     </td>
 
                                                     <!--begin::Action=-->
@@ -599,6 +867,44 @@
                                                                 <a href="{{ route('submission-modules.details', $submissionModule_tab3->id) }}"
                                                                     class="menu-link px-3">Detail</a>
                                                             </div>
+                                                            <!--end::Menu item-->
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3">
+                                                                <a href="{{ route('submission-modules.edit', $submissionModule_tab3->id) }}"
+                                                                    class="menu-link px-3 validasiupdate"
+                                                                    data-submissionmodule-id="{{ $submissionModule_tab3->id }}"
+                                                                    data-submissionmodule-status="{{ $submissionModule_tab3->status }}">Ubah
+                                                                    Data</a>
+                                                                </button>
+                                                            </div>
+                                                            <!--end::Menu item-->
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3">
+                                                                <form class="form-delete"
+                                                                    action="{{ route('submission-modules.destroy', $submissionModule_tab3->id) }}"
+                                                                    method="post">
+                                                                    @method('delete')
+                                                                    @csrf
+                                                                    <button
+                                                                        class="menu-link px-3 btn btn-sm validasidestroy"
+                                                                        type="submit"
+                                                                        data-submissionmodule-status="{{ $submissionModule_tab3->status }}">
+                                                                        Hapus
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                            <!--end::Menu item-->
+                                                            <!--begin::Menu item-->
+                                                            @if(auth()->user()->id_role == 3 || auth()->user()->id_role
+                                                            == 4)
+                                                            <div class="menu-item px-3">
+                                                                <a href="#" class="menu-link px-3 validasiupdatestatus"
+                                                                    data-submissionmodule-id="{{ $submissionModule_tab3->id }}"
+                                                                    data-submissionmodule-status="{{ $submissionModule_tab3->status }}">Ubah
+                                                                    Status</a>
+                                                                </button>
+                                                            </div>
+                                                            @endif
                                                             <!--end::Menu item-->
                                                         </div>
                                                         <!--end::Menu-->
@@ -644,6 +950,86 @@
         <!--end::Post-->
     </div>
     <!--end::Content-->
+
+    <div class="modal fade" tabindex="-1" id="description_tab0">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Keterangan</h5>
+                    <button type="button" class="btn btn-icon btn-sm btn-active-light-primary ms-auto"
+                        data-bs-dismiss="modal" aria-label="Close">
+                        <span class="svg-icon svg-icon-2x">
+                            <!-- Icon close, bisa diganti dengan icon close yang sesuai -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-x">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td>
+                                <div class="badge badge-light-secondary fw-bolder">Baru Ditambahkan</div>
+                            </td>
+                            <td>:</td>
+                            <td>Rapat ini baru saja ditambahkan ke dalam sistem dan belum mengalami proses
+                                persetujuan atau distribusi undangan.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="badge badge-light-warning fw-bolder">Proses Persetujuan</div>
+                            </td>
+                            <td>:</td>
+                            <td>Sedang dalam proses untuk mendapatkan persetujuan dari pihak terkait.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="badge badge-light-success fw-bolder">Sudah Disetujui</div>
+                            </td>
+                            <td>:</td>
+                            <td>Telah mendapatkan persetujuan dari pihak terkait.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="badge badge-light-primary fw-bolder">Undangan Didistribusikan</div>
+                            </td>
+                            <td>:</td>
+                            <td>Undangan untuk rapat sudah didistribusikan kepada peserta rapat.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="badge badge-light-success fw-bolder">Telah Dilaksanakan</div>
+                            </td>
+                            <td>:</td>
+                            <td>Rapat atau kegiatan sudah dilaksanakan sesuai jadwal yang telah ditentukan.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="badge badge-light-info fw-bolder">Notula Tersedia</div>
+                            </td>
+                            <td>:</td>
+                            <td>Notula atau ringkasan hasil rapat sudah tersedia untuk dilihat atau didistribusikan.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="badge badge-light-danger fw-bolder">Batal Dilaksanakan</div>
+                            </td>
+                            <td>:</td>
+                            <td>Rapat atau kegiatan batal dilaksanakan sesuai jadwal yang telah ditentukan.</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" tabindex="-1" id="description_tab1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -861,8 +1247,8 @@
                             <div class="fv-row mb-7">
                                 <label class="required fw-bold fs-6 mb-2">Alasan Dibatalkan</label>
                                 <textarea name="reason_cancelled" class="form-control form-control-lg"
-                                    placeholder="Alasan Dibatalkan" autocomplete="off" rows="5"
-                                    data-kt-autosize="true" wrap="soft"></textarea>
+                                    placeholder="Alasan Dibatalkan" autocomplete="off" rows="5" data-kt-autosize="true"
+                                    wrap="soft"></textarea>
                             </div>
                             @endif
                         </div>
@@ -892,9 +1278,9 @@
 @endsection
 @section('custom-js')
 <script>
-    // Class definition
-    var KTDatatablesButtons_tab1 = function () {
-        // Shared variables
+    // Function to initialize DataTable and handle search
+    var KTDatatable = function (tableId, filterName) {
+        // Private variables
         var table;
         var datatable;
 
@@ -907,8 +1293,8 @@
             });
         }
 
-        var handleSearchDatatable = () => {
-            const filterSearch = document.querySelector('[data-kt-filter="search_tab1"]');
+        var handleSearchDatatable = function () {
+            const filterSearch = document.querySelector(`[data-kt-filter="${filterName}"]`);
             filterSearch.addEventListener('keyup', function (e) {
                 datatable.search(e.target.value).draw();
             });
@@ -917,7 +1303,7 @@
         // Public methods
         return {
             init: function () {
-                table = document.querySelector('#kt_datatable_submission_module_tab1');
+                table = document.querySelector(tableId);
 
                 if (!table) {
                     return;
@@ -927,95 +1313,15 @@
                 handleSearchDatatable();
             }
         };
-    }();
+    };
 
-    // On document ready
+    // Initialize each datatable instance
     KTUtil.onDOMContentLoaded(function () {
-        KTDatatablesButtons_tab1.init();
+        KTDatatable('#kt_datatable_submission_module_tab0', 'search_tab0').init();
+        KTDatatable('#kt_datatable_submission_module_tab1', 'search_tab1').init();
+        KTDatatable('#kt_datatable_submission_module_tab2', 'search_tab2').init();
+        KTDatatable('#kt_datatable_submission_module_tab3', 'search_tab3').init();
     });
-
-    var KTDatatablesButtons_tab2 = function () {
-        // Shared variables
-        var table;
-        var datatable;
-
-        // Private functions
-        var initDatatable = function () {
-            datatable = $(table).DataTable({
-                "info": false,
-                'order': [],
-                'pageLength': 10,
-            });
-        }
-
-        var handleSearchDatatable = () => {
-            const filterSearch = document.querySelector('[data-kt-filter="search_tab2"]');
-            filterSearch.addEventListener('keyup', function (e) {
-                datatable.search(e.target.value).draw();
-            });
-        }
-
-        // Public methods
-        return {
-            init: function () {
-                table = document.querySelector('#kt_datatable_submission_module_tab2');
-
-                if (!table) {
-                    return;
-                }
-
-                initDatatable();
-                handleSearchDatatable();
-            }
-        };
-    }();
-
-    // On document ready
-    KTUtil.onDOMContentLoaded(function () {
-        KTDatatablesButtons_tab2.init();
-    });
-
-    var KTDatatablesButtons_tab3 = function () {
-        // Shared variables
-        var table;
-        var datatable;
-
-        // Private functions
-        var initDatatable = function () {
-            datatable = $(table).DataTable({
-                "info": false,
-                'order': [],
-                'pageLength': 10,
-            });
-        }
-
-        var handleSearchDatatable = () => {
-            const filterSearch = document.querySelector('[data-kt-filter="search_tab3"]');
-            filterSearch.addEventListener('keyup', function (e) {
-                datatable.search(e.target.value).draw();
-            });
-        }
-
-        // Public methods
-        return {
-            init: function () {
-                table = document.querySelector('#kt_datatable_submission_module_tab3');
-
-                if (!table) {
-                    return;
-                }
-
-                initDatatable();
-                handleSearchDatatable();
-            }
-        };
-    }();
-
-    // On document ready
-    KTUtil.onDOMContentLoaded(function () {
-        KTDatatablesButtons_tab3.init();
-    });
-
 
     // Reset form fields when the "Cancel" button is clicked
     document.querySelectorAll('.modal').forEach(modal => {
@@ -1071,6 +1377,7 @@
         const submissionModuleStatus = $(this).data('submissionmodule-status');
 
         const disallowedStatuses = [
+            'Dibatalkan',
             'Proses Persetujuan',
             'Sudah Disetujui',
             'Undangan Didistribusikan',

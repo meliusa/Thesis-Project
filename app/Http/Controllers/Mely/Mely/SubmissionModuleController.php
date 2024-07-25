@@ -7,6 +7,7 @@ use App\Http\Requests\StoreSubmissionModuleRequest;
 use App\Http\Requests\UpdateSubmissionModuleRequest;
 use App\Http\Controllers\Controller;
 use App\Mail\Email;
+use App\Mail\subModuleStatusChangedEmail;
 use App\Models\Admin;
 use App\Models\MeetingParticipant;
 use App\Models\Role;
@@ -83,23 +84,15 @@ class SubmissionModuleController extends Controller
         return redirect()->back()->withInput();
     }
 
-    if(auth()->user()->id_role == 4){
-        foreach ($users as $user) {
-            if ($request->user_id == $user->id){
-                if($user->id_role == 4){
-                    toast('Maaf, staf tidak dapat mengajukan rapat. Diskusikan lebih lanjut dengan Supervisor.', 'error');
-                    return redirect()->route('submission-modules.index');
-                }
-            }
-        }
-        // Jika tidak ditemukan user dengan id yang sesuai
-        toast('Maaf, staf tidak dapat mengajukan rapat. Diskusikan lebih lanjut dengan Supervisor.', 'error');
-        return redirect()->route('submission-modules.index');
-    }
-
     // Simpan data rapat ke SubmissionModule
     $submissionModule = new SubmissionModule();
     $submissionModule->user_id = $request->user_id == '' ? auth()->user()->id : $request->user_id;
+    // Validasi role_id untuk user_id
+    $user = User::find($submissionModule->user_id);
+    if ($user->id_role == 4) {
+        toast('Maaf, staf tidak dapat mengajukan rapat. Diskusikan lebih lanjut dengan Supervisor.', 'error');
+        return redirect()->back()->withInput();
+    }
     $submissionModule->title = $request->title;
     $submissionModule->purpose = $request->purpose;
     $submissionModule->agenda = $request->agenda;
@@ -112,61 +105,95 @@ class SubmissionModuleController extends Controller
     $submissionModule->postscript = $request->postscript;
     $submissionModule->status = 'Baru Ditambahkan';
     $submissionModule->reason_cancelled = '';
-    $submissionModule->created_at = Carbon::now(); // Set timestamp created_at
-    $submissionModule->updated_at = Carbon::now(); // Set timestamp updated_at
+    $submissionModule->created_at = Carbon::now();
+    $submissionModule->updated_at = Carbon::now();
     $submissionModule->save();
 
-    // Ambil agenda_id yang baru saja disimpan
-    $agendaId = $submissionModule->id;
+// Ambil agenda_id yang baru saja disimpan
+$agendaId = $submissionModule->id;
 
-        // Simpan partisipan rapat ke MeetingParticipant berdasarkan role_id
-    if ($request->has('role_id')) {
-        foreach ($request->role_id as $roleId) {
-            // Ambil semua user dengan role_id tertentu
-            $users = User::where('id_role', $roleId)->get();
+// Validasi partisipan rapat
+$hasParticipants = false;
 
-            foreach ($users as $user) {
-                // Periksa apakah user_id tersebut sudah terdaftar di role_id
-                $existingParticipant = MeetingParticipant::where('agenda_id', $agendaId)
-                    ->where('participant_id', $user->id)
-                    ->exists();
+// Simpan partisipan rapat ke MeetingParticipant berdasarkan user_id
+// Cek apakah user_id sudah ada sebagai partisipan
+$existingParticipant = MeetingParticipant::where('agenda_id', $agendaId)
+    ->where('participant_id', $submissionModule->user_id)
+    ->exists();
 
-                // Jika belum terdaftar, simpan sebagai partisipan rapat
-                if (!$existingParticipant) {
-                    MeetingParticipant::create([
-                        'agenda_id' => $agendaId,
-                        'participant_id' => $user->id,
-                    ]);
-                }
+// Jika belum terdaftar, tambahkan sebagai partisipan
+if (!$existingParticipant) {
+    MeetingParticipant::create([
+        'agenda_id' => $agendaId,
+        'participant_id' => $submissionModule->user_id,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+    $hasParticipants = true;
+}
+
+// Simpan partisipan rapat berdasarkan role_id
+if ($request->has('role_id')) {
+    foreach ($request->role_id as $roleId) {
+        // Ambil semua user dengan role_id tertentu
+        $users = User::where('id_role', $roleId)->get();
+
+        foreach ($users as $user) {
+            // Periksa apakah user_id tersebut sudah terdaftar di role_id
+            $existingParticipant = MeetingParticipant::where('agenda_id', $agendaId)
+                ->where('participant_id', $user->id)
+                ->exists();
+
+            // Jika belum terdaftar, simpan sebagai partisipan rapat
+            if (!$existingParticipant) {
+                MeetingParticipant::create([
+                    'agenda_id' => $agendaId,
+                    'participant_id' => $user->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+                $hasParticipants = true; // Set flag bahwa ada partisipan yang dipilih
             }
         }
     }
+}
 
-    // Simpan partisipan rapat ke MeetingParticipant berdasarkan user_id_participant
-    if ($request->has('user_id_participant')) {
-        $userIds = $request->user_id_participant;
+// Simpan partisipan rapat berdasarkan user_id_participant
+if ($request->has('user_id_participant')) {
+    $userIds = $request->user_id_participant;
 
-        if (!empty($userIds)) {
-            foreach ($userIds as $userId) {
-                // Periksa apakah user_id tersebut sudah terdaftar sebagai partisipan rapat
-                $existingParticipant = MeetingParticipant::where('agenda_id', $agendaId)
-                    ->where('participant_id', $userId)
-                    ->exists();
+    if (!empty($userIds)) {
+        foreach ($userIds as $userId) {
+            // Periksa apakah user_id tersebut sudah terdaftar sebagai partisipan rapat
+            $existingParticipant = MeetingParticipant::where('agenda_id', $agendaId)
+                ->where('participant_id', $userId)
+                ->exists();
 
-                // Jika belum terdaftar, simpan sebagai partisipan rapat
-                if (!$existingParticipant) {
-                    MeetingParticipant::create([
-                        'agenda_id' => $agendaId,
-                        'participant_id' => $userId,
-                    ]);
-                }
+            // Jika belum terdaftar, simpan sebagai partisipan rapat
+            if (!$existingParticipant) {
+                MeetingParticipant::create([
+                    'agenda_id' => $agendaId,
+                    'participant_id' => $userId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+                $hasParticipants = true; // Set flag bahwa ada partisipan yang dipilih
             }
         }
     }
+}
 
-    // Tampilkan pesan sukses dan redirect ke halaman index
-    toast('Data Berhasil Ditambahkan', 'success');
-    return redirect()->route('submission-modules.index');
+// Jika tidak ada partisipan yang dipilih, tampilkan pesan kesalahan
+if (!$hasParticipants) {
+    toast('Partisipan rapat harus dipilih.', 'error');
+    $submissionModule->delete(); // Hapus data SubmissionModule yang sudah disimpan
+    return redirect()->back()->withInput();
+}
+
+// Tampilkan pesan sukses dan redirect ke halaman index
+toast('Data Berhasil Ditambahkan', 'success');
+return redirect()->route('submission-modules.index');
+
 }
 
     /**
@@ -220,6 +247,7 @@ class SubmissionModuleController extends Controller
             'type' => $request->type,
             'supporting_document' => $request->supporting_document,
             'postscript' => $request->postscript,
+            'updated_at' => now(),
         ]);
 
         toast('Data Berhasil Diubah', 'success');
@@ -281,9 +309,12 @@ class SubmissionModuleController extends Controller
         }
         
         $submissionModule->status = $request->status;
+        $submissionModule->updated_at = now();
         $submissionModule->save();
 
-    toast('Status Berhasil Diubah', 'success');
+        Mail::to($submissionModule->user->email)->send(new subModuleStatusChangedEmail());
+
+        toast('Status Berhasil Diubah', 'success');
 
     return redirect()->route('submission-modules.index');
     }   
@@ -316,13 +347,15 @@ class SubmissionModuleController extends Controller
                 } else {
                     // Jika belum dikonfirmasi, update waktu konfirmasi
                     $existingPresence->confirmed_at = Carbon::now();
+                    $existingPresence->updated_at = Carbon::now();
                     $existingPresence->save();
 
                     // Berikan pesan sukses
                     toast('Konfirmasi Kehadiran Berhasil.', 'success');
                 }
+            }else{
+                toast('Anda bukan partisipan untuk agenda ini.', 'error');
             } 
-        
             return redirect()->route('submission-modules.details', $id);
         }
 

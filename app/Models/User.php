@@ -22,6 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'id_role',
         'nama',
+        'email',
         'username',
         'password',
         'foto'
@@ -60,11 +61,6 @@ class User extends Authenticatable
         return $this->hasOne(Employee::class, 'id_user', 'id');
     }
 
-    public function meetingRequests()
-    {
-        return $this->hasMany(MeetingRequest::class, 'user_id', 'id');
-    }
-
     public function materials()
     {
         return $this->hasMany(Agenda::class);
@@ -78,11 +74,6 @@ class User extends Authenticatable
     public function minute()
     {
         return $this->hasMany(Minute::class);
-    }
-
-    public function presence()
-    {
-        return $this->hasMany(presence::class);
     }
 
     public function submissionModule()

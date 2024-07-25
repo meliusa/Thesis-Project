@@ -381,11 +381,22 @@
                                     data-allow-clear="true"
                                     data-dropdown-parent="#kt_modal_edit_status_meeting_request_form" name="status">
                                     <option disabled>Pilih Status</option>
+                                    @if($polling->status == 'Baru Ditambahkan')
+                                    <option value="Proses" {{ $polling->status == 'Proses' ? 'selected' : '' }}>
+                                        Proses
+                                    </option>
+                                    @endif
+                                    @if($polling->status == 'Proses')
+                                    <option value="Selesai" {{ $polling->status == 'Selesai' ? 'selected' : '' }}>
+                                        Selesai</option>
+                                    @endif
+                                    @if($polling->status == 'Selesai')
                                     <option value="Proses" {{ $polling->status == 'Proses' ? 'selected' : '' }}>
                                         Proses
                                     </option>
                                     <option value="Selesai" {{ $polling->status == 'Selesai' ? 'selected' : '' }}>
                                         Selesai</option>
+                                    @endif
                                 </select>
                             </div>
                             <!--end::Input group-->
@@ -487,7 +498,7 @@
             });
         } else {
             window.location.href = $(this).attr(
-            'href'); // Mengarahkan ke halaman edit dengan mengambil href dari tautan
+                'href'); // Mengarahkan ke halaman edit dengan mengambil href dari tautan
         }
     });
 
@@ -554,7 +565,7 @@
         const pollingId = $(this).data('polling-id');
         const pollingStatus = $(this).data('polling-status');
 
-        if (pollingStatus == 'Selesai') {
+        if (pollingStatus == 'asd') {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',

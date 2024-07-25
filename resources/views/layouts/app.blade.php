@@ -21,7 +21,7 @@
 
     @include('layouts.partial.custom-css')
     @yield('custom-css')
-    
+</head>
 <!--end::Head-->
 
 <body id="kt_body"

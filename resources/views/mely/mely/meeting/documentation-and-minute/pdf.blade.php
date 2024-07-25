@@ -152,7 +152,21 @@
                 </tr>
                 <tr>
                     <td><strong>Lokasi Rapat:</strong></td>
+                    @if ($submissionModule->type == 'Daring')
+                    @php
+                    $url = $submissionModule->location;
+                    // Memastikan URL dimulai dengan 'http://' atau 'https://'
+                    if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+                    // Jika tidak dimulai dengan http:// atau https://, tampilkan pesan "Link Invalid"
+                    echo '<td style="color: red;">Tautan tidak valid. (Harus diawali dengan http atau https)</td>';
+                    } else {
+                    // Jika dimulai dengan http:// atau https://, tampilkan tautan yang valid
+                    echo '<td>' . $url . '</td>';
+                    }
+                    @endphp
+                    @else
                     <td>{{ $submissionModule->location }}</td>
+                    @endif
                 </tr>
                 <tr>
                     <td><strong>Notulis Rapat:</strong></td>

@@ -88,6 +88,10 @@ class MeetingParticipantController extends Controller
         } else {
             $meetingParticipant->update([
                 'initial_absen_at' => Carbon::now(), 
+                'updated_at' => Carbon::now(), 
+            ]);
+            $submissionModule->update([
+                'updated_at' => now(),
             ]);
             toast('Tanggal dan Jam Presensi awal Berhasil Tersimpan', 'success');
         }
@@ -116,12 +120,47 @@ class MeetingParticipantController extends Controller
             } else {
                 $meetingParticipant->update([
                     'final_absen_at' => Carbon::now(), 
+                    'updated_at' => Carbon::now(), 
+                ]);
+                $submissionModule->update([
+                    'updated_at' => now(),
                 ]);
                 toast('Tanggal dan Jam Presensi akhir Berhasil Tersimpan', 'success');
             }
         }
         
         return redirect()->route('integrated-calendars.index');
+    }
+
+    public function updateNotAttendingReason(Request $request, $id){
+        $userId = $request->participant_id;
+        $submissionModule = SubmissionModule::findOrFail($id);
+        
+        // Menggunakan first() karena mencari satu record
+        $meetingParticipant = MeetingParticipant::where('agenda_id', $submissionModule->id)
+                                ->where('participant_id', $userId)
+                                ->first();
+        
+        // Memeriksa apakah data $meetingParticipant ditemukan
+        if (!$meetingParticipant) {
+            toast('Anda tidak memiliki akses untuk melakukan presensi untuk agenda ini', 'error');
+        } else {
+            // Memeriksa apakah sudah ada data presensi dan final_absen_at belum terisi
+            if ($meetingParticipant->not_attending_reason !== null) {
+                toast('Anda sudah mengisikan alasan tidak hadir untuk agenda ini', 'error');
+            } else {
+                $meetingParticipant->update([
+                    'not_attending_reason' => $request->not_attending_reason, 
+                    'updated_at' => now(), 
+                ]);
+                $submissionModule->update([
+                    'updated_at' => now(),
+                ]);
+                toast('Alasan Tidak Hadir Berhasil Tersimpan', 'success');
+            }
+        }
+        
+        return redirect()->route('attendance-lists.details', ['id' => $id]);
     }
 
 }

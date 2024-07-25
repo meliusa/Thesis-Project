@@ -40,17 +40,8 @@
                     </li>
                     <!--end::Item-->
                     <!--begin::Item-->
-                    <li class="breadcrumb-item text-muted">Tindak Lanjut</li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item">
-                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
-                    </li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('minutes.index') }}" class="text-muted text-hover-primary">Daftar
-                            Notula</a>
+                        <a href="{{ route('doc-minutes.index') }}" class="text-muted text-hover-primary">Dokumentasi & Notulensi</a>
                     </li>
                     <!--end::Item-->
                     <!--begin::Item-->
@@ -87,7 +78,7 @@
                 <div class="card-header">
                     <!--begin::Card title-->
                     <div class="card-title m-0">
-                        <h3 class="fw-bolder m-5">ID : {{ $docMinute->id }} </h3>
+                        <h3 class="fw-bolder m-5">ID Notula : {{ $docMinute->id }} </h3>
                         @php
                         $statusResult = '';
                         switch($docMinute->status) {

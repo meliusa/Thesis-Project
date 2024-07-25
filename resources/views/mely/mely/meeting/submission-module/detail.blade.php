@@ -104,7 +104,7 @@
                 <div class="card-header">
                     <!--begin::Card title-->
                     <div class="card-title m-0">
-                        <h3 class="fw-bolder m-5">Agenda ID : {{ $submissionModule->id }}</h3>
+                        <h3 class="fw-bolder m-5">ID Agenda : {{ $submissionModule->id }}</h3>
                         @php
                         $statusResult = '';
                         switch($submissionModule->status) {
@@ -270,8 +270,7 @@
                     // Memastikan URL dimulai dengan 'http://' atau 'https://'
                     if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
                     // Jika tidak dimulai dengan http:// atau https://, tampilkan pesan "Link Invalid"
-                    echo 'Tautan tidak valid. (Harus diawali dengan http atau
-                    https)';
+                    echo '<span style="color: red;">Tautan tidak valid. (Harus diawali dengan http atau https)</span>';
                     } else {
                     // Jika dimulai dengan http:// atau https://, tampilkan tautan yang valid
                     echo '<a href="' . $url . '" target="_blank">' . $url . '</a>';
@@ -296,8 +295,7 @@
                     // Memastikan URL dimulai dengan 'http://' atau 'https://'
                     if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
                     // Jika tidak dimulai dengan http:// atau https://, tampilkan pesan "Link Invalid"
-                    echo 'Tautan tidak valid. (Harus diawali dengan http atau
-                    https)';
+                    echo '<span style="color: red;">Tautan tidak valid. (Harus diawali dengan http atau https)</span>';
                     } else {
                     // Jika dimulai dengan http:// atau https://, tampilkan tautan yang valid
                     echo '<a href="' . $url . '" target="_blank">' . $url . '</a>';

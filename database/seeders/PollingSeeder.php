@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Polling;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -13,10 +11,13 @@ class PollingSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-       public function run()
+    public function run()
     {
-        // Ambil semua submission_modules yang tersedia
-        $submissionModules = DB::table('submission_modules')->pluck('id')->toArray();
+        // Ambil semua submission_modules dengan status "Undangan Didistribusikan"
+        $submissionModules = DB::table('submission_modules')
+                             ->where('status', 'Undangan Didistribusikan')
+                             ->pluck('id')
+                             ->toArray();
 
         // Data pertanyaan untuk polling
         $questions = [

@@ -91,16 +91,17 @@
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
-                                        <input type="text" name="user_id" class="form-control form-control-lg"
-                                            placeholder="Pengaju Rapat" autocomplete="off" required @php $nameResult=''
-                                            ; @endphp @foreach ($users as $user) @if ($submissionModule->user_id ==
-                                        $user->id)
-                                        @php
-                                        $nameResult = $user->nama;
-                                        @endphp
-                                        @endif
-                                        @endforeach
-                                        value="{{ $nameResult }} ( ID : {{ $submissionModule->user_id }} )" disabled />
+                                        <label class="col-form-label fw-bold fs-6">
+                                            @php $nameResult='';
+                                            @endphp
+                                            @foreach ($users as $user)
+                                            @if ($submissionModule->user_id ==$user->id)
+                                            @php
+                                            $nameResult = $user->nama;
+                                            @endphp
+                                            @endif
+                                            @endforeach
+                                            {{ $nameResult }} ( ID : {{ $submissionModule->user_id }} )</label>
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -211,7 +212,7 @@
                                             <!--end::Radio-->
                                             <!--begin::Radio-->
                                             <label
-                                                class="btn btn-outline-secondary text-muted text-hover-white text-active-white btn-outline btn-active-success active {{ $submissionModule->type == 'Tatap Muka' ? 'active' : '' }}"
+                                                class="btn btn-outline-secondary text-muted text-hover-white text-active-white btn-outline btn-active-success {{ $submissionModule->type == 'Tatap Muka' ? 'active' : '' }}"
                                                 data-kt-button="true">
                                                 <!--begin::Input-->
                                                 <input class="btn-check" type="radio" name="type"

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('confirmed_at')->nullable();
             $table->timestamp('initial_absen_at')->nullable();
             $table->timestamp('final_absen_at')->nullable();
+            $table->string('not_attending_reason')->nullable();
             $table->timestamps();
 
             // Foreign keys

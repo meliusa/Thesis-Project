@@ -2,31 +2,23 @@
 
 namespace App\Mail;
 
-use App\Models\DocMinute;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\SubmissionModule;
-use Illuminate\Database\Eloquent\Collection;
 
-class docMinuteEmail extends Mailable
+class subModuleStatusChangedEmail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $docMinute;
-    public $docMinuteQnaDetails;
-    public $submissionModule;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(DocMinute $docMinute, Collection $docMinuteQnaDetails, SubmissionModule $submissionModule)
+    public function __construct()
     {
-        $this->docMinute = $docMinute;
-        $this->docMinuteQnaDetails = $docMinuteQnaDetails;
-        $this->submissionModule = $submissionModule;
+        //
     }
 
     /**
@@ -35,7 +27,7 @@ class docMinuteEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Dokumentasi & Notulensi Rapat',
+            subject: 'Notifikasi Perubahan Status',
         );
     }
 
@@ -45,8 +37,7 @@ class docMinuteEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mely.mely.meeting.email.doc-minute',
-            
+            view: 'mely.mely.meeting.email.sub-status-changed',
         );
     }
 

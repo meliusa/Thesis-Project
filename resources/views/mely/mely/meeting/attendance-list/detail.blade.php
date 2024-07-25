@@ -135,11 +135,12 @@
                             <thead>
                                 <!--begin::Table row-->
                                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                                    <th class="min-w-125px">No</th>
+                                    <th class="min-w-62.5px">No</th>
                                     <th class="min-w-125px">Partisipan</th>
-                                    <th class="min-w-125px">Kofnrimasi Email</th>
+                                    <th class="min-w-125px">Konfirmasi Email</th>
                                     <th class="min-w-125px">Presensi 1</th>
                                     <th class="min-w-125px">Presensi 2</th>
+                                    <th class="min-w-125px">Penyebab Tidak Hadir</th>
                                 </tr>
                                 <!--end::Table row-->
                             </thead>
@@ -171,23 +172,36 @@
                                         @php
                                         $confirmed_at = $meetingParticipant->confirmed_at ?
                                         \Carbon\Carbon::parse($meetingParticipant->confirmed_at)->format('d-m-Y H:i:s')
-                                        : '';
+                                        : '-';
                                         @endphp
                                         {{ $confirmed_at }}
                                     </td>
                                     <td>@php
                                         $initial_absen_at = $meetingParticipant->initial_absen_at ?
                                         \Carbon\Carbon::parse($meetingParticipant->initial_absen_at)->format('d-m-Y
-                                        H:i:s') : '';
+                                        H:i:s') : '-';
                                         @endphp
                                         {{ $initial_absen_at }}</td>
                                     <td>
                                         @php
                                         $final_absen_at = $meetingParticipant->final_absen_at ?
                                         \Carbon\Carbon::parse($meetingParticipant->final_absen_at)->format('d-m-Y
-                                        H:i:s') : '';
+                                        H:i:s') : '-';
                                         @endphp
                                         {{ $final_absen_at }}
+                                    </td>
+                                    <td>
+                                        @if($meetingParticipant->not_attending_reason)
+                                        {{ $meetingParticipant->not_attending_reason }}
+                                        @else
+                                        @if(auth()->user()->id_role == 3 || auth()->user()->id_role == 4)
+                                        <a href="#" class="btn btn-icon btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#kt_modal_not_attending_reason_{{ $submissionModule->id }}_{{ $meetingParticipant->participant_id }}"><i
+                                                class="las la-plus fs-2 me-2"></i></a>
+                                        @else
+                                        -
+                                        @endif
+                                        @endif
                                     </td>
                                 </tr>
                                 <!--end::Table row-->
@@ -206,6 +220,76 @@
         <!--end::Post-->
     </div>
     <!--end::Content-->
+
+    @foreach ($meetingParticipants as $meetingParticipant)
+    <div class="modal fade"
+        id="kt_modal_not_attending_reason_{{ $submissionModule->id }}_{{ $meetingParticipant->participant_id }}"
+        tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header">
+                    <!--begin::Modal title-->
+                    <h2 class="fw-bolder">Form Tidak Hadir</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" type="button" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                    transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                    fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <!--begin::Form-->
+                    <form id="kt_modal_not_attending_reason_form_{{ $submissionModule->id }}" class="form"
+                        action="{{ route('meeting-participants.update-not-attending-reason', $submissionModule->id) }}"
+                        method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="participant_id" value="{{ $meetingParticipant->participant_id }}">
+                        <!--begin::Scroll-->
+                        <div class="d-flex flex-column scroll-y me-n7 pe-7">
+                            <div class="fv-row mb-7">
+                                <label class="required fw-bold fs-6 mb-2">Alasan Tidak Hadir</label>
+                                <textarea name="not_attending_reason" class="form-control form-control-lg"
+                                    placeholder="Alasan Tidak Hadir" autocomplete="off" rows="5" data-kt-autosize="true"
+                                    wrap="soft" required></textarea>
+                            </div>
+                        </div>
+                        <!--end::Scroll-->
+                        <!--begin::Actions-->
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="indicator-label">Simpan</span>
+                                <span class="indicator-progress">Mohon tunggu...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    @endforeach
 
 </section>
 @endsection

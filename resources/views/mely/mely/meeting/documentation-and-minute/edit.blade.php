@@ -14,7 +14,7 @@
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <!--begin::Title-->
-                    <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Tambah Data</h1>
+                    <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Ubah Data</h1>
                     <!--end::Title-->
                     <!--begin::Separator-->
                     <span class="h-20px border-gray-300 border-start mx-4"></span>
@@ -51,7 +51,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-dark">Tambah Data</li>
+                        <li class="breadcrumb-item text-dark">Ubah Data</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -70,7 +70,7 @@
                     <div class="card-header border-0 cursor-pointer" role="button" aria-expanded="true">
                         <!--begin::Card title-->
                         <div class="card-title m-0">
-                            <h3 class="fw-bolder m-0">Tambah Data</h3>
+                            <h3 class="fw-bolder m-0">Ubah Data</h3>
                         </div>
                         <!--end::Card title-->
                         <a href="{{ route('doc-minutes.index') }}" class="btn btn-light align-self-center">Kembali</a>
@@ -99,9 +99,7 @@
                                         }
                                         }
                                         @endphp
-                                        <input name="agenda_id" class="form-control form-control-lg"
-                                            placeholder="Agenda Rapat" autocomplete="off" disabled
-                                            value="{{ $nameResult }} (ID : {{ $docMinute->agenda_id }})" />
+                                        <label class="col-form-label fw-bold fs-6">{{ $nameResult }} (ID : {{ $docMinute->agenda_id }})</label>
                                     </div>
                                     <!--end::Col-->
                                 </div>

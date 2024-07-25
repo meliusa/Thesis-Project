@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -14,17 +13,40 @@ class DocMinuteSeeder extends Seeder
      */
     public function run()
     {
-        // Ambil semua submission_modules yang memiliki status 'Telah Dilaksanakan'
-        $agendaIds = DB::table('submission_modules')
-                        ->where('status', 'Telah Dilaksanakan')
-                        ->pluck('id')
-                        ->toArray();
+        // Ambil semua submission_modules yang memiliki status 'Telah Dilaksanakan' tanpa duplicat agenda_id
+        $submissionModules = DB::table('submission_modules')
+                                ->where('status', 'Telah Dilaksanakan')
+                                ->distinct()
+                                ->get(['id']);
+
+        // Jumlah notulensi yang ingin di-generate (minimal 10)
+        $desiredCount = 10;
+
+        // Periksa jumlah submission_modules yang memenuhi kriteria
+        $submissionModuleCount = $submissionModules->count();
+
+        // Jika kurang dari 10, tambahkan notulensi berdasarkan jumlah yang diperlukan
+        if ($submissionModuleCount < $desiredCount) {
+            $additionalCount = $desiredCount - $submissionModuleCount;
+
+            for ($i = 0; $i < $additionalCount; $i++) {
+                $submissionModules[] = $submissionModules->random();
+            }
+        }
 
         // Data events dan decisions untuk setiap entri
         $data = [];
 
-        foreach ($agendaIds as $agendaId) {
-            $data[] = [
+        foreach ($submissionModules as $submissionModule) {
+            // Pastikan tidak ada duplikasi agenda_id
+            $agendaId = $submissionModule->id;
+
+            // Skip jika agenda_id sudah ada di data
+            if (isset($data[$agendaId])) {
+                continue;
+            }
+
+            $data[$agendaId] = [
                 'id' => Str::uuid(),
                 'agenda_id' => $agendaId,
                 'user_id' => $this->getRandomUserId(),
@@ -37,7 +59,7 @@ class DocMinuteSeeder extends Seeder
         }
 
         // Masukkan data ke dalam tabel
-        DB::table('doc_minutes')->insert($data);
+        DB::table('doc_minutes')->insert(array_values($data));
     }
 
     private function getRandomUserId()

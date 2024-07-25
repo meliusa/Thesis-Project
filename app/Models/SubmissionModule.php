@@ -80,9 +80,4 @@ class SubmissionModule extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function meetingParticipant()
-    {
-        return $this->hasMany(MeetingRequest::class);
-    }
-
 }

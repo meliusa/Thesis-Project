@@ -187,6 +187,7 @@
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
+                                            @if(auth()->user()->id_role == 3 || auth()->user()->id_role == 4)
                                             <div class="menu-item px-3">
                                                 <a href="{{ route('doc-minutes.edit', $docMinute->id) }}"
                                                     class="menu-link px-3 validasiupdate"
@@ -210,7 +211,6 @@
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
-                                            @if(auth()->user()->id_role == 3 || auth()->user()->id_role == 4)
                                             <div class="menu-item px-3">
                                                 <form class="form-update-status"
                                                     action="{{ route('doc-minutes.update-status', $docMinute->id) }}"
@@ -219,7 +219,7 @@
                                                     @method('PUT')
                                                     <button class="menu-link px-3 btn btn-sm validasiupdatestatus"
                                                         type="submit" data-docminute-status="{{ $docMinute->status }}">
-                                                        Ubah Status
+                                                        Distribusikan
                                                     </button>
                                                 </form>
                                             </div>
@@ -430,12 +430,12 @@
         if (docMinuteStatus === 'Baru Ditambahkan') {
             Swal.fire({
                 title: 'Apakah Anda Yakin?',
-                text: "Anda akan mengubah status dokumen ini. Tindakan ini tidak dapat dikembalikan.",
-                icon: 'warning',
+                text: "Anda akan mendistribusikan dokumen ini kepada Peserta. Tindakan ini tidak dapat dikembalikan.",
+                icon: 'info',
                 showCancelButton: true,
-                confirmButtonColor: '#ffc107',
+                confirmButtonColor: '#6f42c1',
                 cancelButtonColor: '#adb5bd',
-                confirmButtonText: 'Ubah',
+                confirmButtonText: 'Distribusikan',
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit(); // Submit form jika dikonfirmasi
@@ -443,9 +443,9 @@
             });
         } else {
             Swal.fire({
-                icon: 'error',
+                icon: 'info',
                 title: 'Oops...',
-                text: 'Status "' + docMinuteStatus + '" tidak dapat diubah.',
+                text: 'Dokumen sudah didistribusikan kepada Peserta.',
             });
         }
     });
